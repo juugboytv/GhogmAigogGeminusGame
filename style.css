@@ -164,6 +164,32 @@ body { color: var(--text-primary); }
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
+.main-tab-dropdown {
+    flex-grow: 1;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color-main);
+    border-radius: 0.375rem;
+    color: var(--highlight-color);
+    cursor: pointer;
+    transition: all 0.3s;
+    outline: none;
+}
+.main-tab-dropdown:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 0 10px rgba(var(--highlight-color-rgb), 0.3);
+}
+.main-tab-dropdown:focus {
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 15px rgba(var(--highlight-color-rgb), 0.4);
+}
+.main-tab-dropdown option {
+    background: #1a1a1a;
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
 .main-tab-panel { display: none; }
 .main-tab-panel.active { display: block; }
 /* --- Modals & Toasts --- */
