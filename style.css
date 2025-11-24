@@ -186,7 +186,7 @@ body { color: var(--text-primary); }
     box-shadow: 0 0 15px rgba(var(--highlight-color-rgb), 0.4);
 }
 .main-tab-dropdown option {
-    background: #1a1a1a;
+    background: var(--input-bg);
     color: var(--text-primary);
     padding: 0.5rem;
 }
