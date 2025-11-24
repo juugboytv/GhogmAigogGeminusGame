@@ -1360,10 +1360,13 @@ init() {
     console.log("Game Initialized. Player loaded:", state.player);
 },
 setupEventListeners() {
-ui.mainTabsContainer.addEventListener('click', (e) => {
-if (state.ui.isLayoutEditMode || !e.target.classList.contains('main-tab-button')) return;
-this.switchTab(e.target.dataset.tab);
+const mainTabDropdown = document.getElementById('main-tab-dropdown');
+if (mainTabDropdown) {
+mainTabDropdown.addEventListener('change', (e) => {
+if (state.ui.isLayoutEditMode) return;
+this.switchTab(e.target.value);
 });
+}
 ui.focusModeBtn.addEventListener('click', () => {
 state.ui.isFocused = !state.ui.isFocused;
 ui.mainContent.classList.toggle('focused', state.ui.isFocused);
@@ -1378,10 +1381,10 @@ ZoneManager.draw();
 ui.mapCloseBtn.addEventListener('click', () => ui.fullScreenMapOverlay.classList.add('hidden'));
 },
 switchTab(tabName) {
-document.querySelectorAll('#main-tabs-container .main-tab-button, #main-tab-content .main-tab-panel').forEach(el => el.classList.remove('active'));
-const tabButton = document.querySelector(`.main-tab-button[data-tab="${tabName}"]`);
+document.querySelectorAll('#main-tab-content .main-tab-panel').forEach(el => el.classList.remove('active'));
 const tabPanel = document.getElementById(`tab-content-${tabName}`);
-if (tabButton) tabButton.classList.add('active');
+const mainTabDropdown = document.getElementById('main-tab-dropdown');
+if (mainTabDropdown) mainTabDropdown.value = tabName;
 if (tabPanel) tabPanel.classList.add('active');
 const managers = {
 combat: CombatManager, stats: StatsManager, inventory: InventoryManager,
