@@ -1422,7 +1422,7 @@ ZoneManager.draw();
 ui.mapCloseBtn.addEventListener('click', () => ui.fullScreenMapOverlay.classList.add('hidden'));
 },
 switchTab(tabName) {
-// Update tab panels
+// Update tab panel visibility
 document.querySelectorAll('#main-tab-content .main-tab-panel').forEach(el => el.classList.remove('active'));
 const tabPanel = document.getElementById(`tab-content-${tabName}`);
 if (tabPanel) tabPanel.classList.add('active');
