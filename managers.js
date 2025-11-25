@@ -420,14 +420,30 @@ const WorldMapManager = {
         this.mapRenderer.draw(MapDataStore.data, state.player.pos);
     }
 };
+// --- Haptic feedback utility for touch devices ---
+function triggerHapticFeedback(intensity = 'light') {
+    if ('vibrate' in navigator) {
+        switch(intensity) {
+            case 'light': navigator.vibrate(10); break;
+            case 'medium': navigator.vibrate(25); break;
+            case 'heavy': navigator.vibrate(50); break;
+            default: navigator.vibrate(10);
+        }
+    }
+}
+
 // --- D-Pad and Keyboard Controls ---
 function initControls() {
-const keyElements = document.querySelectorAll('.game-key');
+// Select both old and new DPAD elements
+const keyElements = document.querySelectorAll('.game-key, .dpad-btn');
 const setKeyState = (key, isPressed) => {
 state.keyState[key] = isPressed;
 document.querySelectorAll(`[data-key="${key}"]`).forEach(el => el.classList.toggle('pressed', isPressed));
 };
 const handleKeyPress = (key) => {
+    // Trigger haptic feedback on key press
+    triggerHapticFeedback(key === 'interact' ? 'medium' : 'light');
+    
     if (!state.player || !ZoneManager.isLoaded) return;
     let dx = 0, dy = 0;
     switch(key) {

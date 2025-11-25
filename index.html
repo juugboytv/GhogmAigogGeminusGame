@@ -117,13 +117,31 @@ window.firebase = {
 </section>
 <section id="controls-panel" class="h-full glass-panel p-2 rounded-lg">
 <div class="flex flex-col items-center justify-center h-full">
-<div id="d-pad-controls" class="d-pad-controls">
-<div class="game-key move-key" id="key-up" data-key="up"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></div>
-<div class="game-key move-key" id="key-left" data-key="left"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg></div>
-<div class="game-key move-key" id="key-down" data-key="down"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></div>
-<div class="game-key move-key" id="key-right" data-key="right"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg></div>
+<div id="d-pad-controls" class="dpad-container">
+<div class="dpad-wrapper">
+<div class="dpad-btn dpad-up" id="key-up" data-key="up">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></span>
+<span class="dpad-ripple"></span>
 </div>
-<div class="game-key" id="key-interact" data-key="interact">Interact</div>
+<div class="dpad-btn dpad-left" id="key-left" data-key="left">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg></span>
+<span class="dpad-ripple"></span>
+</div>
+<div class="dpad-center"></div>
+<div class="dpad-btn dpad-right" id="key-right" data-key="right">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg></span>
+<span class="dpad-ripple"></span>
+</div>
+<div class="dpad-btn dpad-down" id="key-down" data-key="down">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></span>
+<span class="dpad-ripple"></span>
+</div>
+</div>
+</div>
+<div class="dpad-btn dpad-action" id="key-interact" data-key="interact">
+<span class="dpad-action-text">Interact</span>
+<span class="dpad-ripple"></span>
+</div>
 </div>
 </section>
 </footer>
@@ -207,13 +225,31 @@ window.firebase = {
 </div>
 </div>
 <div class="flex flex-col items-center">
-<div class="d-pad-controls" id="map-d-pad">
-<div class="game-key move-key key-up" data-key="up"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></div>
-<div class="game-key move-key key-left" data-key="left"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg></div>
-<div class="game-key move-key key-down" data-key="down"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></div>
-<div class="game-key move-key" id="key-right" data-key="right"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg></div>
+<div class="dpad-container" id="map-d-pad">
+<div class="dpad-wrapper">
+<div class="dpad-btn dpad-up" data-key="up">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></span>
+<span class="dpad-ripple"></span>
 </div>
-<div class="game-key key-interact" data-key="interact">Interact</div>
+<div class="dpad-btn dpad-left" data-key="left">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg></span>
+<span class="dpad-ripple"></span>
+</div>
+<div class="dpad-center"></div>
+<div class="dpad-btn dpad-right" data-key="right">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg></span>
+<span class="dpad-ripple"></span>
+</div>
+<div class="dpad-btn dpad-down" data-key="down">
+<span class="dpad-icon"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></span>
+<span class="dpad-ripple"></span>
+</div>
+</div>
+</div>
+<div class="dpad-btn dpad-action" data-key="interact">
+<span class="dpad-action-text">Interact</span>
+<span class="dpad-ripple"></span>
+</div>
 </div>
 <button id="map-close-btn" class="absolute top-4 right-4 text-3xl text-gray-400 hover:text-white">&times;</button>
 </div>
