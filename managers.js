@@ -1384,13 +1384,22 @@ if (dropdownToggle && dropdownMenu) {
     // Toggle dropdown on button click
     dropdownToggle.addEventListener('click', () => {
         const isOpen = dropdownMenu.classList.contains('open');
-        dropdownMenu.classList.remove('hidden');
         if (isOpen) {
             dropdownMenu.classList.remove('open');
             dropdownToggle.classList.remove('open');
+            // Add hidden class after transition completes
+            setTimeout(() => {
+                if (!dropdownMenu.classList.contains('open')) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            }, 200);
         } else {
-            dropdownMenu.classList.add('open');
-            dropdownToggle.classList.add('open');
+            dropdownMenu.classList.remove('hidden');
+            // Use requestAnimationFrame to ensure hidden is removed before adding open
+            requestAnimationFrame(() => {
+                dropdownMenu.classList.add('open');
+                dropdownToggle.classList.add('open');
+            });
         }
     });
 
@@ -1411,6 +1420,9 @@ if (dropdownToggle && dropdownMenu) {
         // Close dropdown
         dropdownMenu.classList.remove('open');
         dropdownToggle.classList.remove('open');
+        setTimeout(() => {
+            dropdownMenu.classList.add('hidden');
+        }, 200);
         
         // Switch tab
         this.switchTab(tabName);
@@ -1421,6 +1433,9 @@ if (dropdownToggle && dropdownMenu) {
         if (!e.target.closest('.tab-dropdown-container')) {
             dropdownMenu.classList.remove('open');
             dropdownToggle.classList.remove('open');
+            setTimeout(() => {
+                dropdownMenu.classList.add('hidden');
+            }, 200);
         }
     });
 }
