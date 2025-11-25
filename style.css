@@ -54,7 +54,6 @@ body.theme-aetherial-shard {
     50% { border-bottom-color: var(--glow-color); text-shadow: 0 0 12px var(--glow-color); }
 }
 body.theme-aetherial-shard .glass-panel { animation-name: pulse-border-cyan; }
-body.theme-aetherial-shard .main-tab-button.active { animation-name: pulse-main-tab-glow-cyan; }
 body.theme-aetherial-shard .glass-panel {
     background-image: linear-gradient(var(--panel-bg-color), var(--panel-bg-color)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='0.02' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
@@ -91,7 +90,6 @@ body.theme-molten-core {
     50% { border-bottom-color: var(--glow-color); text-shadow: 0 0 12px var(--glow-color); }
 }
 body.theme-molten-core .glass-panel { animation-name: pulse-border-molten; }
-body.theme-molten-core .main-tab-button.active { animation-name: pulse-main-tab-glow-molten; }
 body.theme-molten-core .glass-panel { background: var(--panel-bg-color); }
 body.theme-molten-core .gem-item.selected { border-color: var(--glow-color); box-shadow: 0 0 10px var(--glow-color); }
 /* --- Core UI Components (Theme-Dependent Styles) --- */
@@ -152,18 +150,6 @@ body { color: var(--text-primary); }
 /* --- Main Layout & Tabs --- */
 #main-content { transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out; }
 #main-content.focused { position: fixed; inset: 0; z-index: 50; width: 100vw; height: 100vh; border-radius: 0; padding: 0; }
-.main-tab-button {
-    flex-shrink: 0; font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
-    padding: 0.75rem 1rem; background: transparent; border: none;
-    border-bottom: 3px solid transparent; color: var(--text-secondary);
-    cursor: pointer; transition: color 0.3s;
-}
-.main-tab-button.active {
-    color: var(--highlight-color);
-    animation-duration: 4s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-}
 .main-tab-panel { display: none; }
 .main-tab-panel.active { display: block; }
 /* --- Modals & Toasts --- */
@@ -317,4 +303,100 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
 /* RESIZE FIX: Ensure sections can grow and shrink properly */
 #layout-container > .tappable-section {
     transition: flex 0.3s ease-in-out;
+}
+/* --- Custom Tab Dropdown Styles --- */
+.tab-dropdown-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.tab-dropdown-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--panel-bg-color);
+    border: 1px solid var(--border-color-main);
+    border-radius: 8px;
+    color: var(--highlight-color);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 8px var(--highlight-color);
+    box-shadow: 0 0 10px rgba(var(--highlight-color-rgb), 0.2);
+}
+
+.tab-dropdown-toggle:hover,
+.tab-dropdown-toggle.open {
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 15px rgba(var(--highlight-color-rgb), 0.4);
+}
+
+.tab-dropdown-arrow {
+    width: 20px;
+    height: 20px;
+    stroke: var(--highlight-color);
+    transition: transform 0.3s ease;
+}
+
+.tab-dropdown-toggle.open .tab-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.tab-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--panel-bg-color);
+    border: 1px solid var(--border-color-main);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(var(--highlight-color-rgb), 0.2);
+}
+
+.tab-dropdown-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tab-dropdown-menu.hidden {
+    display: none;
+}
+
+.tab-dropdown-item {
+    padding: 12px 16px;
+    color: var(--text-secondary);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-bottom: 1px solid rgba(var(--highlight-color-rgb), 0.1);
+}
+
+.tab-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.tab-dropdown-item:hover {
+    background: rgba(var(--highlight-color-rgb), 0.15);
+    color: var(--highlight-color);
+    text-shadow: 0 0 8px var(--highlight-color);
+}
+
+.tab-dropdown-item.active {
+    background: rgba(var(--highlight-color-rgb), 0.2);
+    color: var(--highlight-color);
+    text-shadow: 0 0 10px var(--highlight-color);
+    font-weight: 700;
 }
