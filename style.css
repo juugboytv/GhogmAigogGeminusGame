@@ -305,6 +305,66 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
 #key-interact, .key-interact { width: 170px; height: 50px; font-size: 18px; font-weight: 700; margin-top: 10px; }
 .game-key.pressed { background: rgba(10, 10, 12, 0.85); border-color: var(--glow-color); transform: scale(0.95);
     box-shadow: 0 0 15px var(--glow-color), 0 0 20px rgba(0,0,0,0.6) inset; color: var(--glow-color); }
+/* --- NEW Runic Cross D-Pad Styles --- */
+.d-pad-container {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    filter: drop-shadow(0 0 8px rgba(var(--highlight-color-rgb), 0.3));
+}
+
+.d-pad-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* BASE STATE - CONSTANT GLOW */
+.d-pad-btn {
+    fill: var(--panel-bg-color);
+    stroke: var(--highlight-color);
+    stroke-width: 1px;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+    filter: drop-shadow(0 0 4px var(--highlight-color));
+}
+
+.d-pad-arrow {
+    fill: var(--highlight-color);
+    pointer-events: none;
+    transition: fill 0.1s;
+}
+
+/* PRESSED STATE - COLOR CHANGE & INTENSE FLASH */
+.d-pad-btn:active, .d-pad-btn.pressed {
+    fill: #ffffff !important;
+    stroke: #ffffff;
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 15px #ffffff);
+}
+
+/* Change arrow color on press so it's visible against white */
+.control-group:has(.d-pad-btn:active) .d-pad-arrow,
+.control-group:has(.d-pad-btn.pressed) .d-pad-arrow {
+    fill: var(--bg-dark, #0f1115);
+}
+
+/* CENTER CORE */
+.core-light {
+    fill: var(--panel-bg-color);
+    stroke: var(--highlight-color);
+    stroke-width: 1;
+    transition: all 0.2s;
+    filter: drop-shadow(0 0 5px var(--highlight-color));
+    pointer-events: none;
+}
+
+.core-light.active {
+    fill: #ffffff;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 20px #ffffff);
+}
+
 /* --- Footer Controls Toggle --- */
 #footer-section { transition: all 0.4s ease-in-out; }
 #communication-panel { flex-grow: 1; transition: all 0.4s ease-in-out; }

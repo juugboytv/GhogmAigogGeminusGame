@@ -107,11 +107,42 @@ window.firebase = {
 </section>
 <section id="controls-panel" class="h-full glass-panel p-2 rounded-lg">
 <div class="flex flex-col items-center justify-center h-full">
-<div id="d-pad-controls" class="d-pad-controls">
-<div class="game-key move-key" id="key-up" data-key="up"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></div>
-<div class="game-key move-key" id="key-left" data-key="left"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg></div>
-<div class="game-key move-key" id="key-down" data-key="down"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></div>
-<div class="game-key move-key" id="key-right" data-key="right"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg></div>
+<div class="d-pad-container" id="d-pad-controls">
+    <svg class="d-pad-svg" viewBox="0 0 100 100">
+        <!-- Background Circle Base -->
+        <circle cx="50" cy="50" r="46" fill="#080808" stroke="#1a1a1a" stroke-width="2" />
+        
+        <!-- UP ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="up" 
+                d="M 35 35 L 35 15 A 5 5 0 0 1 65 15 L 65 35 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 50 20 L 44 28 L 56 28 Z" />
+        </g>
+
+        <!-- RIGHT ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="right" 
+                d="M 65 35 L 85 35 A 5 5 0 0 1 85 65 L 65 65 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 80 50 L 72 44 L 72 56 Z" />
+        </g>
+
+        <!-- DOWN ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="down" 
+                d="M 65 65 L 65 85 A 5 5 0 0 1 35 85 L 35 65 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 50 80 L 56 72 L 44 72 Z" />
+        </g>
+
+        <!-- LEFT ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="left" 
+                d="M 35 65 L 15 65 A 5 5 0 0 1 15 35 L 35 35 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 20 50 L 28 56 L 28 44 Z" />
+        </g>
+
+        <!-- Glowing Center Core -->
+        <circle cx="50" cy="50" r="6" class="core-light" />
+    </svg>
 </div>
 <div class="game-key" id="key-interact" data-key="interact">Interact</div>
 </div>
@@ -197,11 +228,42 @@ window.firebase = {
 </div>
 </div>
 <div class="flex flex-col items-center">
-<div class="d-pad-controls" id="map-d-pad">
-<div class="game-key move-key key-up" data-key="up"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></div>
-<div class="game-key move-key key-left" data-key="left"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg></div>
-<div class="game-key move-key key-down" data-key="down"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></div>
-<div class="game-key move-key" id="key-right" data-key="right"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg></div>
+<div class="d-pad-container" id="map-d-pad">
+    <svg class="d-pad-svg" viewBox="0 0 100 100">
+        <!-- Background Circle Base -->
+        <circle cx="50" cy="50" r="46" fill="#080808" stroke="#1a1a1a" stroke-width="2" />
+        
+        <!-- UP ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="up" 
+                d="M 35 35 L 35 15 A 5 5 0 0 1 65 15 L 65 35 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 50 20 L 44 28 L 56 28 Z" />
+        </g>
+
+        <!-- RIGHT ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="right" 
+                d="M 65 35 L 85 35 A 5 5 0 0 1 85 65 L 65 65 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 80 50 L 72 44 L 72 56 Z" />
+        </g>
+
+        <!-- DOWN ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="down" 
+                d="M 65 65 L 65 85 A 5 5 0 0 1 35 85 L 35 65 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 50 80 L 56 72 L 44 72 Z" />
+        </g>
+
+        <!-- LEFT ARM -->
+        <g class="control-group">
+            <path class="d-pad-btn game-key" data-key="left" 
+                d="M 35 65 L 15 65 A 5 5 0 0 1 15 35 L 35 35 L 50 50 Z" />
+            <path class="d-pad-arrow" d="M 20 50 L 28 56 L 28 44 Z" />
+        </g>
+
+        <!-- Glowing Center Core -->
+        <circle cx="50" cy="50" r="6" class="core-light" />
+    </svg>
 </div>
 <div class="game-key key-interact" data-key="interact">Interact</div>
 </div>
