@@ -511,7 +511,7 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
 .tab-dropdown-container {
     position: relative;
     width: 100%;
-    max-width: 300px;
+    max-width: 100%;
 }
 
 .tab-dropdown-toggle {
@@ -519,31 +519,45 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
-    background: var(--panel-bg-color);
-    border: 1px solid var(--border-color-main);
-    border-radius: 8px;
+    padding: 14px 18px;
+    background: linear-gradient(145deg, var(--panel-bg-color), rgba(var(--highlight-color-rgb), 0.08));
+    border: 2px solid var(--border-color-main);
+    border-radius: 12px;
     color: var(--highlight-color);
     font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
-    text-shadow: 0 0 8px var(--highlight-color);
-    box-shadow: 0 0 10px rgba(var(--highlight-color-rgb), 0.2);
+    transition: all 0.25s ease;
+    text-shadow: 0 0 10px var(--highlight-color);
+    box-shadow: 0 0 15px rgba(var(--highlight-color-rgb), 0.25),
+                0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Mobile touch optimization */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 52px;
 }
 
 .tab-dropdown-toggle:hover,
 .tab-dropdown-toggle.open {
     border-color: var(--highlight-color);
-    box-shadow: 0 0 15px rgba(var(--highlight-color-rgb), 0.4);
+    box-shadow: 0 0 20px rgba(var(--highlight-color-rgb), 0.5),
+                0 4px 15px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(145deg, var(--panel-bg-color), rgba(var(--highlight-color-rgb), 0.15));
+}
+
+.tab-dropdown-toggle:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 25px rgba(var(--highlight-color-rgb), 0.6),
+                0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .tab-dropdown-arrow {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     stroke: var(--highlight-color);
     transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 4px var(--highlight-color));
 }
 
 .tab-dropdown-toggle.open .tab-dropdown-arrow {
@@ -552,24 +566,27 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
 
 .tab-dropdown-menu {
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(100% + 8px);
     left: 0;
     right: 0;
     background: var(--panel-bg-color);
-    border: 1px solid var(--border-color-main);
-    border-radius: 8px;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border: 2px solid var(--border-color-main);
+    border-radius: 12px;
     overflow: hidden;
-    z-index: 100;
+    z-index: 9999;
     opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.2s ease;
+    transform: translateY(-15px) scale(0.98);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(var(--highlight-color-rgb), 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 
+                0 0 20px rgba(var(--highlight-color-rgb), 0.25);
 }
 
 .tab-dropdown-menu.open {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
 }
 
@@ -577,29 +594,211 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
     display: none;
 }
 
+/* Mobile: Use fixed positioning to escape overflow:hidden parent constraints */
+@media (max-width: 640px) {
+    .tab-dropdown-menu {
+        position: fixed;
+        top: auto;
+        left: 8px;
+        right: 8px;
+        bottom: auto;
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+    
+    .tab-dropdown-menu.open {
+        /* Position will be set via JavaScript for accurate placement */
+    }
+}
+
 .tab-dropdown-item {
-    padding: 12px 16px;
+    padding: 16px 20px;
     color: var(--text-secondary);
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.15s ease;
-    border-bottom: 1px solid rgba(var(--highlight-color-rgb), 0.1);
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(var(--highlight-color-rgb), 0.15);
+    /* Mobile touch optimization */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 50px;
 }
 
 .tab-dropdown-item:last-child {
     border-bottom: none;
 }
 
-.tab-dropdown-item:hover {
+.tab-dropdown-item:hover,
+.tab-dropdown-item:focus {
     background: rgba(var(--highlight-color-rgb), 0.15);
     color: var(--highlight-color);
-    text-shadow: 0 0 8px var(--highlight-color);
+    text-shadow: 0 0 10px var(--highlight-color);
+}
+
+.tab-dropdown-item:active {
+    background: rgba(var(--highlight-color-rgb), 0.25);
+    transform: scale(0.98);
 }
 
 .tab-dropdown-item.active {
-    background: rgba(var(--highlight-color-rgb), 0.2);
+    background: linear-gradient(90deg, rgba(var(--highlight-color-rgb), 0.25), rgba(var(--highlight-color-rgb), 0.1));
     color: var(--highlight-color);
-    text-shadow: 0 0 10px var(--highlight-color);
+    text-shadow: 0 0 12px var(--highlight-color);
     font-weight: 700;
+    border-left: 4px solid var(--highlight-color);
+    padding-left: 16px;
+}
+
+/* Mobile-specific dropdown optimizations */
+@media (max-width: 640px) {
+    .tab-dropdown-container {
+        /* Make dropdown take full width on mobile */
+        max-width: 100%;
+    }
+    
+    .tab-dropdown-toggle {
+        padding: 16px 20px;
+        font-size: 1.15rem;
+        min-height: 56px;
+        border-radius: 14px;
+    }
+    
+    .tab-dropdown-item {
+        padding: 18px 20px;
+        font-size: 1.05rem;
+        min-height: 54px;
+    }
+    
+    .tab-dropdown-menu {
+        border-radius: 14px;
+        /* Ensure menu doesn't extend beyond viewport */
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 375px) {
+    .tab-dropdown-toggle {
+        padding: 14px 16px;
+        font-size: 1rem;
+    }
+    
+    .tab-dropdown-item {
+        padding: 16px 18px;
+        font-size: 1rem;
+    }
+}
+
+/* Dropdown icon indicators for each tab */
+.tab-dropdown-item::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.tab-dropdown-item:hover::before,
+.tab-dropdown-item.active::before {
+    opacity: 1;
+}
+
+.tab-dropdown-item[data-tab="equipment"]::before {
+    content: '⚔️';
+    width: auto;
+    height: auto;
+    font-size: 1.2rem;
+}
+
+.tab-dropdown-item[data-tab="inventory"]::before {
+    content: '🎒';
+    width: auto;
+    height: auto;
+    font-size: 1.2rem;
+}
+
+.tab-dropdown-item[data-tab="stats"]::before {
+    content: '📊';
+    width: auto;
+    height: auto;
+    font-size: 1.2rem;
+}
+
+.tab-dropdown-item[data-tab="combat"]::before {
+    content: '⚡';
+    width: auto;
+    height: auto;
+    font-size: 1.2rem;
+}
+
+.tab-dropdown-item[data-tab="settings"]::before {
+    content: '⚙️';
+    width: auto;
+    height: auto;
+    font-size: 1.2rem;
+}
+
+/* Mobile collapsible bar styling - hide HUD mini-map on very small screens when dropdown is open */
+@media (max-width: 480px) {
+    .tab-dropdown-container.dropdown-expanded ~ #mini-map-panel {
+        opacity: 0.3;
+    }
+    
+    /* Ensure dropdown is prominently displayed above other elements */
+    #main-tabs-container {
+        position: relative;
+        z-index: 50;
+    }
+    
+    /* Make dropdown toggle more visible with pulsing effect */
+    @keyframes mobile-dropdown-pulse {
+        0%, 100% {
+            box-shadow: 0 0 15px rgba(var(--highlight-color-rgb), 0.25),
+                        0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 25px rgba(var(--highlight-color-rgb), 0.4),
+                        0 4px 15px rgba(0, 0, 0, 0.35);
+        }
+    }
+    
+    .tab-dropdown-toggle:not(.open) {
+        animation: mobile-dropdown-pulse 3s ease-in-out infinite;
+    }
+}
+
+/* Fix dropdown overflow clipping - ensure dropdown menu is visible above parent containers */
+#main-tabs-container {
+    overflow: visible;
+    position: relative;
+    z-index: 60;
+}
+
+.tab-dropdown-container {
+    overflow: visible;
+}
+
+/* When dropdown is open, allow it to overflow the main content container */
+#main-content.dropdown-active,
+#main-content-panel.dropdown-active,
+#main-content-container.dropdown-active {
+    overflow: visible;
+}
+
+/* Increase z-index for dropdown menu to appear above all content */
+.tab-dropdown-menu {
+    z-index: 200;
+}
+
+.tab-dropdown-menu.open {
+    z-index: 200;
 }

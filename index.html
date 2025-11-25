@@ -70,19 +70,19 @@ window.firebase = {
 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
 </button>
 <div id="main-tabs-container" class="flex-shrink-0 border-b p-2" style="border-color: var(--border-color-main);">
-    <div class="tab-dropdown-container">
-        <button id="tab-dropdown-toggle" class="tab-dropdown-toggle">
+    <div class="tab-dropdown-container" role="navigation" aria-label="Main navigation">
+        <button id="tab-dropdown-toggle" class="tab-dropdown-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="tab-dropdown-menu">
             <span id="tab-dropdown-selected">Equipment</span>
-            <svg class="tab-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="tab-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M6 9l6 6 6-6"/>
             </svg>
         </button>
-        <div id="tab-dropdown-menu" class="tab-dropdown-menu hidden">
-            <div class="tab-dropdown-item active" data-tab="equipment">Equipment</div>
-            <div class="tab-dropdown-item" data-tab="inventory">Inventory</div>
-            <div class="tab-dropdown-item" data-tab="stats">Stats</div>
-            <div class="tab-dropdown-item" data-tab="combat">Combat</div>
-            <div class="tab-dropdown-item" data-tab="settings">Settings</div>
+        <div id="tab-dropdown-menu" class="tab-dropdown-menu hidden" role="menu" aria-labelledby="tab-dropdown-toggle">
+            <div class="tab-dropdown-item active" data-tab="equipment" role="menuitem" tabindex="0">Equipment</div>
+            <div class="tab-dropdown-item" data-tab="inventory" role="menuitem" tabindex="0">Inventory</div>
+            <div class="tab-dropdown-item" data-tab="stats" role="menuitem" tabindex="0">Stats</div>
+            <div class="tab-dropdown-item" data-tab="combat" role="menuitem" tabindex="0">Combat</div>
+            <div class="tab-dropdown-item" data-tab="settings" role="menuitem" tabindex="0">Settings</div>
         </div>
     </div>
 </div>
