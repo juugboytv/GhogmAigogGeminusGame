@@ -1379,50 +1379,124 @@ setupEventListeners() {
 const dropdownToggle = document.getElementById('tab-dropdown-toggle');
 const dropdownMenu = document.getElementById('tab-dropdown-menu');
 const dropdownSelected = document.getElementById('tab-dropdown-selected');
+const dropdownContainer = document.querySelector('.tab-dropdown-container');
+const mainContent = document.getElementById('main-content');
+const mainContentPanel = document.getElementById('main-content-panel');
+const mainContentContainer = document.getElementById('main-content-container');
 
 if (dropdownToggle && dropdownMenu) {
-    // Toggle dropdown on button click
-    dropdownToggle.addEventListener('click', () => {
+    // Helper function to toggle overflow on parent containers
+    const setDropdownOverflow = (enabled) => {
+        const overflowClass = 'dropdown-active';
+        if (enabled) {
+            if (mainContent) mainContent.classList.add(overflowClass);
+            if (mainContentPanel) mainContentPanel.classList.add(overflowClass);
+            if (mainContentContainer) mainContentContainer.classList.add(overflowClass);
+        } else {
+            if (mainContent) mainContent.classList.remove(overflowClass);
+            if (mainContentPanel) mainContentPanel.classList.remove(overflowClass);
+            if (mainContentContainer) mainContentContainer.classList.remove(overflowClass);
+        }
+    };
+    
+    // Position the dropdown menu for mobile (fixed positioning)
+    const positionDropdownMenu = () => {
+        if (window.innerWidth <= 640) {
+            const toggleRect = dropdownToggle.getBoundingClientRect();
+            dropdownMenu.style.top = `${toggleRect.bottom + 8}px`;
+        } else {
+            dropdownMenu.style.top = '';
+        }
+    };
+
+    // Toggle dropdown on button click with haptic feedback
+    const toggleDropdown = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Trigger haptic feedback for mobile
+        triggerHapticFeedback('light');
+        
         const isOpen = dropdownMenu.classList.contains('open');
         dropdownMenu.classList.remove('hidden');
         if (isOpen) {
             dropdownMenu.classList.remove('open');
             dropdownToggle.classList.remove('open');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+            if (dropdownContainer) dropdownContainer.classList.remove('dropdown-expanded');
+            setDropdownOverflow(false);
         } else {
+            // Position the menu before showing
+            positionDropdownMenu();
             dropdownMenu.classList.add('open');
             dropdownToggle.classList.add('open');
+            dropdownToggle.setAttribute('aria-expanded', 'true');
+            if (dropdownContainer) dropdownContainer.classList.add('dropdown-expanded');
+            setDropdownOverflow(true);
         }
-    });
+    };
+    
+    // Support both click and touch events for better mobile response
+    dropdownToggle.addEventListener('click', toggleDropdown);
+    dropdownToggle.addEventListener('touchend', (e) => {
+        // Prevent double-firing on touch devices
+        e.preventDefault();
+        toggleDropdown(e);
+    }, { passive: false });
 
-    // Handle item selection
-    dropdownMenu.addEventListener('click', (e) => {
+    // Handle item selection with haptic feedback
+    const handleItemSelect = (e) => {
         const item = e.target.closest('.tab-dropdown-item');
         if (!item || state.ui.isLayoutEditMode) return;
         
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Trigger haptic feedback for selection
+        triggerHapticFeedback('medium');
+        
         const tabName = item.dataset.tab;
         
-        // Update selected text
-        dropdownSelected.textContent = item.textContent;
+        // Update selected text (get text without emoji)
+        const itemText = item.textContent.trim();
+        dropdownSelected.textContent = itemText;
         
         // Update active states
         dropdownMenu.querySelectorAll('.tab-dropdown-item').forEach(el => el.classList.remove('active'));
         item.classList.add('active');
         
-        // Close dropdown
-        dropdownMenu.classList.remove('open');
-        dropdownToggle.classList.remove('open');
+        // Close dropdown with slight delay for visual feedback
+        setTimeout(() => {
+            dropdownMenu.classList.remove('open');
+            dropdownToggle.classList.remove('open');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+            if (dropdownContainer) dropdownContainer.classList.remove('dropdown-expanded');
+            setDropdownOverflow(false);
+        }, 100);
         
         // Switch tab
         this.switchTab(tabName);
-    });
+    };
+    
+    dropdownMenu.addEventListener('click', handleItemSelect);
+    dropdownMenu.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handleItemSelect(e);
+    }, { passive: false });
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
+    // Close dropdown when clicking/touching outside
+    const closeDropdown = (e) => {
         if (!e.target.closest('.tab-dropdown-container')) {
             dropdownMenu.classList.remove('open');
             dropdownToggle.classList.remove('open');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+            if (dropdownContainer) dropdownContainer.classList.remove('dropdown-expanded');
+            setDropdownOverflow(false);
         }
-    });
+    };
+    
+    document.addEventListener('click', closeDropdown);
+    document.addEventListener('touchend', closeDropdown, { passive: true });
 }
 ui.focusModeBtn.addEventListener('click', () => {
 state.ui.isFocused = !state.ui.isFocused;
