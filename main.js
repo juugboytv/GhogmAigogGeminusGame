@@ -136,9 +136,23 @@ if(ZoneManager.isInitialized) {
 // --- Controls System ---
 function initControls() {
 const keyElements = document.querySelectorAll('.game-key');
+
+// Function to update core light state based on pressed D-pad buttons
+const updateCoreLights = () => {
+    const dpadKeys = ['up', 'down', 'left', 'right'];
+    const anyDpadPressed = dpadKeys.some(k => state.keyState[k]);
+    document.querySelectorAll('.core-light').forEach(core => {
+        core.classList.toggle('active', anyDpadPressed);
+    });
+};
+
 const setKeyState = (key, isPressed) => {
 state.keyState[key] = isPressed;
 document.querySelectorAll(`[data-key="${key}"]`).forEach(el => el.classList.toggle('pressed', isPressed));
+// Update core light when D-pad button state changes
+if (['up', 'down', 'left', 'right'].includes(key)) {
+    updateCoreLights();
+}
 };
 const handleKeyPress = (key) => {
     if (!state.player || !ZoneManager.isLoaded) return;
