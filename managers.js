@@ -1360,10 +1360,54 @@ init() {
     console.log("Game Initialized. Player loaded:", state.player);
 },
 setupEventListeners() {
-ui.mainTabsContainer.addEventListener('click', (e) => {
-if (state.ui.isLayoutEditMode || !e.target.classList.contains('main-tab-button')) return;
-this.switchTab(e.target.dataset.tab);
-});
+const dropdownToggle = document.getElementById('tab-dropdown-toggle');
+const dropdownMenu = document.getElementById('tab-dropdown-menu');
+const dropdownSelected = document.getElementById('tab-dropdown-selected');
+
+if (dropdownToggle && dropdownMenu) {
+    // Toggle dropdown on button click
+    dropdownToggle.addEventListener('click', () => {
+        const isOpen = dropdownMenu.classList.contains('open');
+        dropdownMenu.classList.remove('hidden');
+        if (isOpen) {
+            dropdownMenu.classList.remove('open');
+            dropdownToggle.classList.remove('open');
+        } else {
+            dropdownMenu.classList.add('open');
+            dropdownToggle.classList.add('open');
+        }
+    });
+
+    // Handle item selection
+    dropdownMenu.addEventListener('click', (e) => {
+        const item = e.target.closest('.tab-dropdown-item');
+        if (!item || state.ui.isLayoutEditMode) return;
+        
+        const tabName = item.dataset.tab;
+        
+        // Update selected text
+        dropdownSelected.textContent = item.textContent;
+        
+        // Update active states
+        dropdownMenu.querySelectorAll('.tab-dropdown-item').forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+        
+        // Close dropdown
+        dropdownMenu.classList.remove('open');
+        dropdownToggle.classList.remove('open');
+        
+        // Switch tab
+        this.switchTab(tabName);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.tab-dropdown-container')) {
+            dropdownMenu.classList.remove('open');
+            dropdownToggle.classList.remove('open');
+        }
+    });
+}
 ui.focusModeBtn.addEventListener('click', () => {
 state.ui.isFocused = !state.ui.isFocused;
 ui.mainContent.classList.toggle('focused', state.ui.isFocused);
@@ -1378,11 +1422,24 @@ ZoneManager.draw();
 ui.mapCloseBtn.addEventListener('click', () => ui.fullScreenMapOverlay.classList.add('hidden'));
 },
 switchTab(tabName) {
-document.querySelectorAll('#main-tabs-container .main-tab-button, #main-tab-content .main-tab-panel').forEach(el => el.classList.remove('active'));
-const tabButton = document.querySelector(`.main-tab-button[data-tab="${tabName}"]`);
+// Update tab panels
+document.querySelectorAll('#main-tab-content .main-tab-panel').forEach(el => el.classList.remove('active'));
 const tabPanel = document.getElementById(`tab-content-${tabName}`);
-if (tabButton) tabButton.classList.add('active');
 if (tabPanel) tabPanel.classList.add('active');
+
+// Update dropdown selected text and active state
+const dropdownSelected = document.getElementById('tab-dropdown-selected');
+const dropdownMenu = document.getElementById('tab-dropdown-menu');
+if (dropdownSelected && dropdownMenu) {
+    const activeItem = dropdownMenu.querySelector(`[data-tab="${tabName}"]`);
+    if (activeItem) {
+        dropdownSelected.textContent = activeItem.textContent;
+        dropdownMenu.querySelectorAll('.tab-dropdown-item').forEach(el => el.classList.remove('active'));
+        activeItem.classList.add('active');
+    }
+}
+
+// Initialize managers as needed
 const managers = {
 combat: CombatManager, stats: StatsManager, inventory: InventoryManager,
 equipment: EquipmentManager, settings: SettingsManager

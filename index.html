@@ -69,12 +69,22 @@ window.firebase = {
 <button id="layout-edit-btn" class="absolute bottom-2 left-2 w-8 h-8 rounded-full bg-blue-600 border border-white/30 flex items-center justify-center cursor-pointer transition-colors hover:bg-blue-500 z-50" title="Toggle Layout Edit Mode">
 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
 </button>
-<div id="main-tabs-container" class="flex-shrink-0 flex items-center overflow-x-auto whitespace-nowrap custom-scrollbar-x border-b" style="border-color: var(--border-color-main);">
-<button class="main-tab-button active tappable-tab" data-tab="equipment" data-tab-order="1">Equipment</button>
-<button class="main-tab-button tappable-tab" data-tab="inventory" data-tab-order="2">Inventory</button>
-<button class="main-tab-button tappable-tab" data-tab="stats" data-tab-order="3">Stats</button>
-<button class="main-tab-button tappable-tab" data-tab="combat" data-tab-order="4">Combat</button>
-<button class="main-tab-button tappable-tab" data-tab="settings" data-tab-order="5">Settings</button>
+<div id="main-tabs-container" class="flex-shrink-0 border-b p-2" style="border-color: var(--border-color-main);">
+    <div class="tab-dropdown-container">
+        <button id="tab-dropdown-toggle" class="tab-dropdown-toggle">
+            <span id="tab-dropdown-selected">Equipment</span>
+            <svg class="tab-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </button>
+        <div id="tab-dropdown-menu" class="tab-dropdown-menu hidden">
+            <div class="tab-dropdown-item active" data-tab="equipment">Equipment</div>
+            <div class="tab-dropdown-item" data-tab="inventory">Inventory</div>
+            <div class="tab-dropdown-item" data-tab="stats">Stats</div>
+            <div class="tab-dropdown-item" data-tab="combat">Combat</div>
+            <div class="tab-dropdown-item" data-tab="settings">Settings</div>
+        </div>
+    </div>
 </div>
 <div id="main-tab-content" class="flex-grow p-2 md:p-4 overflow-y-auto custom-scrollbar relative">
 <div id="tab-content-equipment" class="main-tab-panel active"></div>
