@@ -344,7 +344,8 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
 }
 
 /* Change arrow color on press so it's visible against white */
-.d-pad-btn:active + .d-pad-arrow, .d-pad-btn.pressed + .d-pad-arrow {
+.control-group:has(.d-pad-btn:active) .d-pad-arrow,
+.control-group:has(.d-pad-btn.pressed) .d-pad-arrow {
     fill: var(--bg-dark, #0f1115);
 }
 
@@ -355,6 +356,7 @@ body.theme-molten-core #chat-modal .tab.active { animation-name: pulse-main-tab-
     stroke-width: 1;
     transition: all 0.2s;
     filter: drop-shadow(0 0 5px var(--highlight-color));
+    pointer-events: none;
 }
 
 .core-light.active {
