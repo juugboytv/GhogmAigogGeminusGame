@@ -1379,20 +1379,25 @@ setupEventListeners() {
 const dropdownToggle = document.getElementById('tab-dropdown-toggle');
 const dropdownMenu = document.getElementById('tab-dropdown-menu');
 const dropdownSelected = document.getElementById('tab-dropdown-selected');
+const DROPDOWN_TRANSITION_MS = 200; // Must match CSS transition duration
+
+// Helper function to close dropdown with proper timing
+const closeDropdown = () => {
+    dropdownMenu.classList.remove('open');
+    dropdownToggle.classList.remove('open');
+    setTimeout(() => {
+        if (!dropdownMenu.classList.contains('open')) {
+            dropdownMenu.classList.add('hidden');
+        }
+    }, DROPDOWN_TRANSITION_MS);
+};
 
 if (dropdownToggle && dropdownMenu) {
     // Toggle dropdown on button click
     dropdownToggle.addEventListener('click', () => {
         const isOpen = dropdownMenu.classList.contains('open');
         if (isOpen) {
-            dropdownMenu.classList.remove('open');
-            dropdownToggle.classList.remove('open');
-            // Add hidden class after transition completes
-            setTimeout(() => {
-                if (!dropdownMenu.classList.contains('open')) {
-                    dropdownMenu.classList.add('hidden');
-                }
-            }, 200);
+            closeDropdown();
         } else {
             dropdownMenu.classList.remove('hidden');
             // Use requestAnimationFrame to ensure hidden is removed before adding open
@@ -1418,11 +1423,7 @@ if (dropdownToggle && dropdownMenu) {
         item.classList.add('active');
         
         // Close dropdown
-        dropdownMenu.classList.remove('open');
-        dropdownToggle.classList.remove('open');
-        setTimeout(() => {
-            dropdownMenu.classList.add('hidden');
-        }, 200);
+        closeDropdown();
         
         // Switch tab
         this.switchTab(tabName);
@@ -1431,11 +1432,7 @@ if (dropdownToggle && dropdownMenu) {
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.tab-dropdown-container')) {
-            dropdownMenu.classList.remove('open');
-            dropdownToggle.classList.remove('open');
-            setTimeout(() => {
-                dropdownMenu.classList.add('hidden');
-            }, 200);
+            closeDropdown();
         }
     });
 }
